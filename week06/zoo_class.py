@@ -28,11 +28,10 @@ class Animal(ABC):
         self.genre = genre       # 类型
         self.size = size        # 体型
         self.nature = nature    # 性格
-        self.is_ferocious = self.ferocious_animal
     
-    # 判断是否为凶猛动物
+    # 判断是否为凶猛动物，只读属性
     @property
-    def ferocious_animal(self):
+    def is_ferocious(self):
         return self.genre == "食肉" and self.size in ["大", "中"] and self.nature == "凶猛"       
 
 class Cat(Animal):
@@ -40,12 +39,11 @@ class Cat(Animal):
     def __init__(self, name, genre, size, nature):
         super(Cat, self).__init__(genre, size, nature)
         self.name = name
-        self.pet = self.is_pet
     
-    # 判断是否适合作为宠物
+    # 判断是否适合作为宠物，只读属性
     @property
     def is_pet(self):
-        if super(Cat, self).ferocious_animal:
+        if super(Cat, self).is_ferocious:
             return False
         else:
             return True
@@ -55,12 +53,11 @@ class Dog(Animal):
     def __init__(self, name, genre, size, nature):
         super(Dog, self).__init__(genre, size, nature)
         self.name = name
-        self.pet = self.is_pet
     
-    # 判断是否适合作为宠物
+    # 判断是否适合作为宠物，只读属性
     @property
     def is_pet(self):
-        if super(Dog, self).ferocious_animal:
+        if super(Dog, self).is_ferocious:
             return False
         else:
             return True
