@@ -85,6 +85,8 @@ if __name__ == '__main__':
     print(have_cat)
     have_dog = hasattr(z, 'Dog')
     print(have_dog)
+    have_lion = hasattr(z, 'Lion')
+    print(have_lion)
     print("################## Display zoo status ############################")
     print(z.animal_dict)
     print(z.__dict__)
