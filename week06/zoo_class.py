@@ -3,24 +3,20 @@ import sys
 
 
 class Zoo(object):
+    animal_dict = {}
     def __init__(self, zoo_name):
         self.zoo_name = zoo_name
     
-    def add_animal(self, object):
-        if isinstance(object, Cat):
-            if not hasattr(self, 'Cat'):
-                self.Cat = object
-                print("Add {}".format(object))
-            else:
-                print("{} exists, will not add again".format(object))
-        elif isinstance(object, Dog):
-            if not hasattr(self, 'Dog'):
-                self.Dog = object
-                print("Add {}".format(object))
-            else:
-                print("{} exists, will not add again".format(object))
+    def add_animal(self, animal_object):
+        animal_type = type(animal_object).__name__
+        if animal_type not in self.animal_dict.keys():
+            self.animal_dict[animal_type] = []
+            setattr(self, animal_type, animal_type)
+        if animal_object not in self.animal_dict[animal_type]:
+            self.animal_dict[animal_type].append(animal_object)
+            print("{} does not exist, added to the zoo".format(animal_object.name))
         else:
-            sys.exit("Object class is not defined yet")
+            print("{} exists, will not be added again".format(animal_object.name))
 
 
 class Animal(ABC):
@@ -69,16 +65,26 @@ if __name__ == '__main__':
     z = Zoo('时间动物园')
     # 实例化一只猫，属性包括名字、类型、体型、性格
     cat1 = Cat('大花猫 1', '食肉', '小', '温顺')
-    cat2 = Cat('大花猫 2', '食肉', '小', '温顺')
-    print(cat1.is_ferocious)
-    print(cat1.is_pet)
+    cat2 = Cat('小橘猫 2', '食肉', '小', '凶猛')
     dog1 = Dog('大狼狗 1', '食肉', '大', '凶猛')
+    print("################## If animal is ferocious? ############################")
+    print(cat1.is_ferocious)
+    print(cat2.is_ferocious)
     print(dog1.is_ferocious)
+    print("################## If animal is pet? ############################")
+    print(cat1.is_pet)
+    print(cat2.is_pet)
     print(dog1.is_pet)
+    print("################## Add animal to zoo ############################")
+    z.add_animal(cat1)
     z.add_animal(cat1)
     z.add_animal(cat2)
     z.add_animal(dog1)
+    print("################## If zoo contains specific animal? ############################")
     have_cat = hasattr(z, 'Cat')
     print(have_cat)
     have_dog = hasattr(z, 'Dog')
     print(have_dog)
+    print("################## Display zoo status ############################")
+    print(z.animal_dict)
+    print(z.__dict__)
